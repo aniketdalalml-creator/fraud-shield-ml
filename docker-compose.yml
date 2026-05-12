@@ -1,0 +1,23 @@
+services:
+  api:
+    build: .
+    ports:
+      - "8000:8000"
+    environment:
+      - FRAUD_SHIELD_API_PORT=8000
+      - FRAUD_SHIELD_MODEL_ARTIFACT_PATH=/app/models/fraud_model.pkl
+
+  streamlit:
+    build: .
+    ports:
+      - "8501:8501"
+    environment:
+      - FRAUD_SHIELD_API_PORT=8000
+      - FRAUD_SHIELD_MODEL_ARTIFACT_PATH=/app/models/fraud_model.pkl
+    command:
+      - streamlit
+      - run
+      - app/streamlit_app.py
+      - --server.address=0.0.0.0
+      - --server.port=8501
+
